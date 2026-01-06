@@ -1,7 +1,7 @@
 <h1 style="text-decoration: none;">Leonardo MicroMouse Help Code 2026</h1>
 <img height=80px align='right' src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Arduino_Logo.svg/720px-Arduino_Logo.svg.png'/>
 Here you will find the help code for MicroMouse.</br>
-See video of mouse in action: <a href="https://www.linkedin.com/posts/peter-metcalfe-1me_micromouse-2025-at-leonardo-a-video-of-the-activity-7302253248747352065-Xyxl?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD256Z4BQ7PIICXUdG2ZsWr7DpjFH3nBLX0">LinkedIn</a>
+For context, see video of MicroMouse 2025 here: <a href="https://www.linkedin.com/posts/peter-metcalfe-1me_micromouse-2025-at-leonardo-a-video-of-the-activity-7302253248747352065-Xyxl?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD256Z4BQ7PIICXUdG2ZsWr7DpjFH3nBLX0">LinkedIn</a>
 
 ## Contents
 <img src="https://github.com/user-attachments/assets/4a2ef373-2c49-4930-8519-a5ad0b24f1ef" alt="MicroMouse Title Page" align="right" height=250px/>
@@ -12,7 +12,7 @@ See video of mouse in action: <a href="https://www.linkedin.com/posts/peter-metc
     - [Global Variables](#global-variables)
     - [Global Methods](#global-methods)
 - [Getting Started](#getting-started)
-- [Dependency](#dependency)
+- [Dependencies](#dependencies)
 - [Contributor](#contributor)
 - [License](#license)
 
@@ -68,7 +68,6 @@ float distToMiddle(Cell coord);
 // Use this in combination with `getCell`, like: distToMiddle(getCell(NORTH));
 
 ```
-<br>
 
 ### Global variables
 ```c++
@@ -117,15 +116,14 @@ You need to adjust these variuables to your specifc mouse. Use trial and error.
 ## Dependencies
 Install these using the Arduino IDE Library Manager.
 <br>
+
 `<Arduino_LSM9DS1.h>` Used to control the IMU & Gyro.
 `<Adafruit_VL6180X.h>` Used to control the IR Sensors.
 
 <br>
 
 ## Contributor
-* Peter Metcalfe
-<br>
-Please reach out for support - I'm more than happy to help  :)
+* Peter Metcalfe (Please reach out for support - I'm more than happy to help  :)
 
 <br>
 <br>

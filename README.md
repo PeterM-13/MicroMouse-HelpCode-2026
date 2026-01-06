@@ -114,16 +114,14 @@ You need to adjust these variuables to your specifc mouse. Use trial and error.
 <br>
 
 ## Dependencies
-Install these using the Arduino IDE Library Manager.
-<br>
-
-`<Arduino_LSM9DS1.h>` Used to control the IMU & Gyro.
-`<Adafruit_VL6180X.h>` Used to control the IR Sensors.
+Install these using the Arduino IDE Library Manager:
+* `<Arduino_LSM9DS1>` Used to control the IMU & Gyro.<br>
+* `<Adafruit_VL6180X>` Used to control the IR Sensors.
 
 <br>
 
 ## Contributor
-* Peter Metcalfe (Please reach out for support - I'm more than happy to help  :)
+* <b>Peter Metcalfe</b> (Please reach out for support - I'm more than happy to help  :)
 
 <br>
 <br>

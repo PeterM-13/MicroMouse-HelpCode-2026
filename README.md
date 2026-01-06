@@ -4,7 +4,7 @@ Here you will find the help code for MicroMouse.</br>
 For context, see video of MicroMouse 2025 here: <a href="https://www.linkedin.com/posts/peter-metcalfe-1me_micromouse-2025-at-leonardo-a-video-of-the-activity-7302253248747352065-Xyxl?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD256Z4BQ7PIICXUdG2ZsWr7DpjFH3nBLX0">LinkedIn</a>
 
 ## Contents
-<img src="https://github.com/user-attachments/assets/4a2ef373-2c49-4930-8519-a5ad0b24f1ef" alt="MicroMouse Title Page" align="right" height=250px/>
+<img src="https://github.com/user-attachments/assets/8109bb58-b5f9-48a8-8691-882ccc19e81d" alt="MicroMouse Title Page" align="right" height=250px/>
 
 - [Documentation](#documentation)
     - [Configuration](#config.h)

@@ -108,13 +108,15 @@ void printLoopTime();
 <br>
 
 ## Getting Started
-Begin in `YourAlgorithm.cpp`.<br>Here you will find a default algorith, and this is where you should make edits, using the action functions described above.<br><br>
+Begin in `YourAlgorithm.cpp`.<br>Here you will find a default algorithm, and this is where you should make edits, using the action functions described above.<br><br>
 The other important file is `Config.h`.<br>
 You need to adjust these variuables to your specifc mouse. Use trial and error.
+<br>
 <br>
 
 ## Dependencies
 Install these using the Arduino IDE Library Manager.
+<br>
 `<Arduino_LSM9DS1.h>` Used to control the IMU & Gyro.
 `<Adafruit_VL6180X.h>` Used to control the IR Sensors.
 
@@ -122,7 +124,8 @@ Install these using the Arduino IDE Library Manager.
 
 ## Contributor
 * Peter Metcalfe
-Please reach out for support - I'm more than happy to help :)
+<br>
+Please reach out for support - I'm more than happy to help  :)
 
 <br>
 <br>

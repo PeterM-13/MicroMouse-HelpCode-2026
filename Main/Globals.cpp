@@ -38,15 +38,6 @@ void print(String text, int priority)
   }
 }
 
-void ledOn()
-{
-  digitalWrite(LED_BUILTIN, HIGH);
-}
-void ledOff()
-{
-  digitalWrite(LED_BUILTIN, LOW);
-}
-
 
 long prevLoopTime_us = 0;
 void printLoopTime()

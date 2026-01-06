@@ -32,7 +32,6 @@ float gyroAngleEnd = 0.0;
 long actionDelayEnd = 0.0;
 bool actionDelayActive = false;
 bool irMonitoringActive = false;
-//int irMonitoringEnd = 47;
 
 // Variables used for collision detection
 long colDetcPrevTime_ms = 0; // Last time collisions were detected
@@ -74,7 +73,7 @@ void loopMotors()
     
     if(irMonitoringActive)
     {
-      if(IR_MONITORING_THRESHOLD > irReadings[FRONT_LEFT_LED][IR_VALUE] || IR_MONITORING_THRESHOLD > irReadings[FRONT_RIGHT_LED][IR_VALUE])
+      if(IR_MONITORING_THRESHOLD > irReadings[FRONT_LEFT_SENSOR] || IR_MONITORING_THRESHOLD > irReadings[FRONT_RIGHT_SENSOR])
       {
         print("INFO: IR monitoring end reached");
         parkMotors(true);
@@ -90,8 +89,8 @@ void loopMotors()
       else if(spinDirection == notSpinning)
       {
         // Monitor last wall opening
-        if(irReadings[LEFT_LED][IR_VALUE] > IR_SENSOR_2_WALL_GAP_THRESHOLD ||
-          irReadings[RIGHT_LED][IR_VALUE] > IR_SENSOR_3_WALL_GAP_THRESHOLD) // No wall left or no wall right
+        if(irReadings[LEFT_SENSOR] > IR_SENSOR_2_WALL_GAP_THRESHOLD ||
+          irReadings[RIGHT_SENSOR] > IR_SENSOR_3_WALL_GAP_THRESHOLD) // No wall left or no wall right
         {
           int avgMotorSteps = round((leftMotorSteps + rightMotorSteps) / 2.0);
           int diffAvgMotorSteps = avgMotorSteps - prevAvgMotorSteps;
@@ -242,7 +241,7 @@ void turnRight()
   int diff = 0;
   if(wallFront)
   {
-    diff = ((irReadings[FRONT_LEFT_LED][IR_VALUE]+FRONT_IR_VALUE_DIFF) - (irReadings[FRONT_RIGHT_LED][IR_VALUE]-FRONT_IR_VALUE_DIFF)) * TURNING_DIFF_SCALE;
+    diff = ((irReadings[FRONT_LEFT_SENSOR]+FRONT_IR_VALUE_DIFF) - (irReadings[FRONT_RIGHT_SENSOR]-FRONT_IR_VALUE_DIFF)) * TURNING_DIFF_SCALE;
   }
   const int distanceToTravel = (90+diff) * TURN_RIGHT_DEG_TO_STEPS_MULTIPLIER;  // Convert angle to steps
   leftMotorStepsEnd = leftMotorSteps + distanceToTravel;
@@ -255,7 +254,7 @@ void turnLeft()
   int diff = 0;
   if(wallFront)
   {
-    diff = ((irReadings[FRONT_RIGHT_LED][IR_VALUE]-FRONT_IR_VALUE_DIFF) - (irReadings[FRONT_LEFT_LED][IR_VALUE]+FRONT_IR_VALUE_DIFF)) * TURNING_DIFF_SCALE;
+    diff = ((irReadings[FRONT_RIGHT_SENSOR]-FRONT_IR_VALUE_DIFF) - (irReadings[FRONT_LEFT_SENSOR]+FRONT_IR_VALUE_DIFF)) * TURNING_DIFF_SCALE;
   }
   const int distanceToTravel = (90+diff) * TURN_LEFT_DEG_TO_STEPS_MULTIPLIER;  // Convert angle to steps
   leftMotorStepsEnd = leftMotorSteps + distanceToTravel;
@@ -264,7 +263,7 @@ void turnLeft()
 }
 void turnAround()
 {
-  if(irReadings[LEFT_LED][IR_VALUE] < irReadings[RIGHT_LED][IR_VALUE]) // Closer to left wall, so turn right (clockwise)
+  if(irReadings[LEFT_SENSOR] < irReadings[RIGHT_SENSOR]) // Closer to left wall, so turn right (clockwise)
   {
     const int distanceToTravel = 180 * 2.42;  // Convert angle to steps
     leftMotorStepsEnd = leftMotorSteps + distanceToTravel;
@@ -346,10 +345,10 @@ void detectCollisionWithSteps()
 void laneCenter()
 {
   resetMotorBias();
-  const int leftWall = (irReadings[LEFT_LED][0] < IR_SENSOR_2_WALL_THRESHOLD_LC); 
-  const int rightWall = (irReadings[RIGHT_LED][0] < IR_SENSOR_3_WALL_THRESHOLD_LC);
-  const int left = irReadings[LEFT_LED][IR_VALUE] - LC_LEFT_RIGHT_BIAS;
-  const int right = irReadings[RIGHT_LED][IR_VALUE] + LC_LEFT_RIGHT_BIAS;
+  const int leftWall = (irReadings[LEFT_SENSOR] < IR_SENSOR_2_WALL_THRESHOLD_LC); 
+  const int rightWall = (irReadings[RIGHT_SENSOR] < IR_SENSOR_3_WALL_THRESHOLD_LC);
+  const int left = irReadings[LEFT_SENSOR] - LC_LEFT_RIGHT_BIAS;
+  const int right = irReadings[RIGHT_SENSOR] + LC_LEFT_RIGHT_BIAS;
   signed int diff;
   // Only if there is a wall either side try standard IR lane centering
   if (leftWall && rightWall)

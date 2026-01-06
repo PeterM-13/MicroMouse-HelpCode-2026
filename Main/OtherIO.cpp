@@ -1,17 +1,21 @@
 #include "OtherIO.h"
 
 // Push Button vars
-const int PUSH_BUTTON_1_PIN = 8;
-bool pushButton1State = false;
-bool pushButton1PrevState = false;
-const int PUSH_BUTTON_2_PIN = 9;
-bool pushButton2State = false;
-bool pushButton2PrevState = false;
+const int PUSH_BUTTON_PIN = A6;
+bool pushButtonState = false;
+bool pushButtonPrevState = false;
 
-// Pulsing Arduino LED vars
+// LED variabes
+const int LED_PIN = 9;
 bool pulseLedState = false;
 unsigned int pulseLedDelay_ms = 0;
 long prevPulseLedTime = 0;
+
+// Buzzer variables
+const int BUZZER_PIN = 8;
+bool pulseBuzzerState = false;
+unsigned int pulseBuzzerDelay_ms = 0;
+long prevPulseBuzzerTime = 0;
 
 // Spare pins
 const int SPARE_PIN_1 = 10;
@@ -21,86 +25,112 @@ const int SPARE_PIN_2 = 12;
 void setupOtherIO()
 {
   // Pin Setup
-  pinMode(PUSH_BUTTON_1_PIN, INPUT_PULLUP);
-  pinMode(PUSH_BUTTON_2_PIN, INPUT_PULLUP);
+  pinMode(PUSH_BUTTON_PIN, INPUT_PULLUP);
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(SPARE_PIN_1, OUTPUT);
+  pinMode(SPARE_PIN_2, OUTPUT);
+
+  digitalWrite(LED_PIN, LOW);
+  digitalWrite(BUZZER_PIN, LOW);
+  digitalWrite(SPARE_PIN_1, LOW);
+  digitalWrite(SPARE_PIN_2, LOW);
 
   //  Set Interrupt(s) 
-  attachInterrupt(digitalPinToInterrupt(PUSH_BUTTON_1_PIN), pushButton1Pressed, RISING);
-  attachInterrupt(digitalPinToInterrupt(PUSH_BUTTON_2_PIN), pushButton2Pressed, RISING);
+  attachInterrupt(digitalPinToInterrupt(PUSH_BUTTON_PIN), pushButtonPressed, RISING);
 }
 
 void loopOtherIO()
 {
-  checkButtonsForPress();
+  checkButtonForPress();
 
   pulseLedLoop();
 }
 
-
-void pushButton1Pressed()
+// -------- Button Functions -------
+void pushButtonPressed()
 {
-  if(pushButton1State == pushButton1PrevState)
+  if(pushButtonState == pushButtonPrevState)
   {
-    pushButton1State = !pushButton1State;
-  }
-}
-void pushButton2Pressed()
-{
-  if(pushButton2State == pushButton2PrevState)
-  {
-    pushButton2State = !pushButton2State;
+    pushButtonState = !pushButtonState;
   }
 }
 
-
-bool checkButtonsForPress()
+bool checkButtonForPress()
 {
-  if(pushButton1State != pushButton1PrevState)
+  if(pushButtonState != pushButtonPrevState)
   {
-    print("EVENT: Button 1 Pressed");
+    print("EVENT: Button Pressed");
     ledOn();
     delay(200); // Allow button bounce
     ledOff();
-    pushButton1PrevState = pushButton1State;
+    pushButtonPrevState = pushButtonState;
     
     // Start Algorithm
     fatalError = false;
     collisionDetectionActive = false;
     startAlgorithm = true;
-    startAlgorithm2 = false;
     clearBuffer(actionBuffer);
     setupAlgorithm();
-    return true;
-  }
-
-  if(pushButton2State != pushButton2PrevState)
-  {
-    print("EVENT: Button 2 Pressed");
-    ledOn();
-    delay(200); // Allow button bounce
-    ledOff();
-    pushButton2PrevState = pushButton2State;
-    
-    // TODO: Perform some action
-    fatalError = false;
-    collisionDetectionActive = false;
-    startAlgorithm2 = true;
-    startAlgorithm = false;
-    clearBuffer(actionBuffer);
-    //setupAlgorithm();
     return true;
   }
   return false;
 }
 
+// ------- LED Functions -------
+void ledOn()
+{
+  digitalWrite(LED_PIN, HIGH);
+}
+void ledOff()
+{
+  digitalWrite(LED_PIN, LOW);
+}
+
+// The little orange LED on the Arduino itself.
+void arduinoLedOn()
+{
+  digitalWrite(LED_BUILTIN, HIGH);
+}
+void arduinoLedOff()
+{
+  digitalWrite(LED_BUILTIN, LOW);
+}
 
 void pulseLedLoop()
 {
   long currentPulseLedTime = millis();
   if (pulseLedDelay_ms > 0 && currentPulseLedTime > prevPulseLedTime + pulseLedDelay_ms) 
   {
-    digitalWrite(LED_BUILTIN, pulseLedState);
+    digitalWrite(LED_PIN, pulseLedState);
     pulseLedState = !pulseLedState;
     prevPulseLedTime = currentPulseLedTime;
   }
 }
+
+
+// ------ Buzzer Functions -------
+void buzzerOn()
+{
+  digitalWrite(BUZZER_PIN, HIGH);
+}
+void buzzerOff()
+{
+  digitalWrite(BUZZER_PIN, LOW);
+}
+
+void pulseBuzzerLoop()
+{
+  long currentPulseBuzzerTime = millis();
+  if (pulseBuzzerDelay_ms > 0 && currentPulseBuzzerTime > prevPulseBuzzerTime + pulseBuzzerDelay_ms) 
+  {
+    digitalWrite(BUZZER_PIN, pulseBuzzerState);
+    pulseBuzzerState = !pulseBuzzerState;
+    prevPulseBuzzerTime = currentPulseBuzzerTime;
+  }
+}
+
+
+
+
+

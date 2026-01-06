@@ -1,124 +1,75 @@
 #include "IRcontrol.h"
 
-// IR Phototransistor Pins
-const int IR_SENSOR_1_PIN = A0;
-const int IR_SENSOR_2_PIN = A1;
-const int IR_SENSOR_3_PIN = A2;
-const int IR_SENSOR_4_PIN = A3;
-const int IR_SENSORS[N_SENSORS] = {IR_SENSOR_1_PIN, IR_SENSOR_2_PIN, IR_SENSOR_3_PIN, IR_SENSOR_4_PIN};
+IrSensor irSensors[N_SENSORS] = {
+  // Sensor object, Shutdown Pin #, I2C address.
+  { Adafruit_VL6180X(), A3, 0x29 },
+  { Adafruit_VL6180X(), A2, 0x30 },
+  { Adafruit_VL6180X(), A1, 0x31 },
+  { Adafruit_VL6180X(), A0, 0x32 }
+};
 
-// IR LED Pins
-const int IR_LED_1_PIN = A7;
-const int IR_LED_2_PIN = A6;
-const int IR_LED_3_PIN = A5;
-const int IR_LED_4_PIN = A4;
-const int IR_LED_PINS[4] = {IR_LED_1_PIN, IR_LED_2_PIN, IR_LED_3_PIN, IR_LED_4_PIN};
-
-int irReadings[N_SENSORS][3]; // 4 sensors // 0 = last reading, 1 = last ambient reading, 2 = time end
+int irReadings[N_SENSORS]; // Store most recent range measurements
 int currentSensor = 3; // The sensor currently being read from
-bool prevIrReadEnded = true;
-bool irSensorsActive = false;;
-
-const int IR_MAX_READING = 1024;
-const int IR_LIMIT = IR_MAX_READING * 0.5;
-const int IR_LED_ON_TIME_ms = 3;  // The time the LEDs are on to take a reading
+bool irSensorsActive = false; // Taking range measurements when true
 
 
-void setupLEDs()
+void setupIrSensors()
 {
-    // ------------------- Pin Setup  -------------------
-    // LED Steup
-    pinMode(IR_LED_1_PIN, OUTPUT);
-    pinMode(IR_LED_2_PIN, OUTPUT);
-    pinMode(IR_LED_3_PIN, OUTPUT);
-    pinMode(IR_LED_4_PIN, OUTPUT);
+  // ------------------- Pin Setup  -------------------
+  for (int i = 0; i < N_SENSORS; i++) {
+    pinMode(irSensors[i].shutdownPin, OUTPUT);
+    digitalWrite(irSensors[i].shutdownPin, LOW);
+  }
 
-    // IR Phototransistor Setup
-    pinMode(IR_SENSOR_1_PIN, INPUT);
-    pinMode(IR_SENSOR_2_PIN, INPUT);
-    pinMode(IR_SENSOR_3_PIN, INPUT);
-    pinMode(IR_SENSOR_4_PIN, INPUT);
-
-    // ------------------- Set OUTPUT Initial States -------------------
-    digitalWrite(IR_LED_1_PIN, LOW);
-    digitalWrite(IR_LED_2_PIN, LOW);
-    digitalWrite(IR_LED_3_PIN, LOW);
-    digitalWrite(IR_LED_4_PIN, LOW);
+  // --- Udpdate Sensor I2C Addresses ---
+  for(int sensorIndex=0; sensorIndex<N_SENSORS; sensorIndex++)
+  {
+    digitalWrite(irSensors[sensorIndex].shutdownPin, HIGH); // Power-up IR sensor
+    delay(20);
+    if (irSensors[sensorIndex].sensor.begin()) // Initialise IR sensor
+    {
+      irSensors[sensorIndex].sensor.setAddress(irSensors[sensorIndex].address); // Change sensor's address
+      delay(10);
+    }
+    else 
+    {
+      print("ERROR: Failed to initialise sensor " + String(sensorIndex));
+      fatalError = true;
+      break;
+    }
+  }
+  if(!fatalError){ print("INFO: IR Sensors ready!"); }
 }
 
-void loopLEDs()
+void loopIrSensors()
 {
-  // Read sensors ALL the time.
-  if(prevIrReadEnded && irSensorsActive) // If finished reading prev sensor
+  if(irSensorsActive) 
   {
     currentSensor ++;
     if(currentSensor >= N_SENSORS) // Reset count if above 3
     {
       currentSensor = 0;
     }
-    prevIrReadEnded = false;
-    startIrReading(currentSensor);
+    readIrRange(currentSensor); // Read one sensor per program loop to not cause too much delay
   }
-  else  // Prev reading timer not ended yet
+}
+
+void readIrRange(const int sensorIndex)
+{
+  uint8_t status = irSensors[sensorIndex].sensor.readRangeStatus();
+  if (status == VL6180X_ERROR_NONE) 
   {
-    if(micros() >= irReadings[currentSensor][TIME])  // Check if timer should be up
-    {
-      stopIrReading(currentSensor); // Store value
-      prevIrReadEnded = true;
-    }
+    irReadings[sensorIndex] = irSensors[sensorIndex].sensor.readRange();
+  }
+  else 
+  {
+    print("ERROR: IR Sensor bad status:" + String(status));
   }
 }
 
 void checkAllWalls()
 {
-  wallFront = (irReadings[FRONT_LEFT_LED][0] < IR_SENSOR_1_WALL_THRESHOLD && irReadings[FRONT_RIGHT_LED][0] < IR_SENSOR_4_WALL_THRESHOLD);
-  wallLeft = (irReadings[LEFT_LED][0] < IR_SENSOR_2_WALL_THRESHOLD); //|| (FL < IR_SENSOR_1_4_SIDE_WALL_THRESHOLD && FR > IR_SENSOR_1_4_SIDE_WALL_THRESHOLD);
-  wallRight = (irReadings[RIGHT_LED][0] < IR_SENSOR_3_WALL_THRESHOLD);// || (FL > IR_SENSOR_1_4_SIDE_WALL_THRESHOLD && FR < IR_SENSOR_1_4_SIDE_WALL_THRESHOLD);
-}
-
-
-void startIrReading(const int led)
-{
-  const int ambientLight = analogRead(IR_SENSORS[led]); // Pre-read, for ambiant light
-  irReadings[led][AMBIENT_VALUE] = IR_MAX_READING - ambientLight;
-  digitalWrite(IR_LED_PINS[led], HIGH); // LED on
-  irReadings[led][TIME] = micros() + IR_LED_ON_TIME_ms*1000;  // Time the LED should turn off
-}
-
-void stopIrReading(const int led)
-{ 
-  const int reading = analogRead(IR_SENSORS[led]); 
-  irReadings[led][IR_VALUE] = reading + irReadings[led][AMBIENT_VALUE]; // Store value with ambient light added
-  digitalWrite(IR_LED_PINS[led], LOW); // LED off
-}
-
-
-
-// Turns the selected LED ON / OFF for 1 second
-void testLed(const int led)
-{
-  switch(led)
-  {
-    case FRONT_LEFT_LED:
-      digitalWrite(IR_LED_1_PIN, HIGH);
-      delay(1000);
-      digitalWrite(IR_LED_1_PIN, LOW);
-      break;
-    case LEFT_LED:
-      digitalWrite(IR_LED_2_PIN, HIGH);
-      delay(1000);
-      digitalWrite(IR_LED_2_PIN, LOW);
-      break;
-    case RIGHT_LED:
-      digitalWrite(IR_LED_3_PIN, HIGH);
-      delay(1000);
-      digitalWrite(IR_LED_3_PIN, LOW);
-      break;
-    case FRONT_RIGHT_LED:
-      digitalWrite(IR_LED_4_PIN, HIGH);
-      delay(1000);
-      digitalWrite(IR_LED_4_PIN, LOW);
-      break;
-  }
-  delay(1000);
+  wallFront = (irReadings[FRONT_LEFT_SENSOR] < IR_SENSOR_1_WALL_THRESHOLD && irReadings[FRONT_RIGHT_SENSOR] < IR_SENSOR_4_WALL_THRESHOLD);
+  wallLeft = (irReadings[LEFT_SENSOR] < IR_SENSOR_2_WALL_THRESHOLD); 
+  wallRight = (irReadings[RIGHT_SENSOR] < IR_SENSOR_3_WALL_THRESHOLD);
 }

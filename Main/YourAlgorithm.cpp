@@ -19,32 +19,30 @@ void setupAlgorithm()
 {
   delay(1000); // Allow button press
   setupNavigation(); // Resets starting position
-  startOffsetAction(); // Move forward slightly to see walls ahead
+  startOffsetAction(); // Move forward slightly to see walls ahead (assuming you start with mouse flat against back wall)
 }
 
 
 void loopAlgorithm()
 { 
-  if(startAlgorithm) // Set True after button 1 pressed
+  if(startAlgorithm) // Set True after button pressed
   {
     mainAlgorithm();
-  }
-  if(startAlgorithm2)  // Set True after button 2 pressed
-  {
-    testIrReadings();
+  
+    // --- Algorithms to Test HW ---
+    // Ensure only ONE algo is uncommented at once (this includes the main one above).
+    // testIrReadings();
     // testMotors();
-    // testIrLeds();
-    // startAlgorithm2 = false;  // uncomment this to stop looping
+    // startAlgorithm = false;  // uncomment this to stop looping
   }
 }
 
 
-// Algorithm that makes decisions based on proximity to center.
+// Default algorithm that makes decisions based on proximity to center.
 void mainAlgorithm()
 {
   if(currentActionComplete && isBufferEmpty(actionBuffer))
   {
-
     // Check if reached the middle. Stop if reached.
     if (checkMiddle())
     {
@@ -116,31 +114,21 @@ void testMotors()
   addBlindMoveForwardAction(1, 100);
   addParkAction();
   startAlgorithm = false;
-  startAlgorithm2 = false;
 }
-void testIrLeds()
-{
-  // Turns each LED ON / OFF for 1 second.
-  // Use your phone camera to view if the LED turns on (invisible to human eye).
-  // Should see a faint purple glow usning phone camera.
-  testLed(FRONT_LEFT_LED);
-  testLed(LEFT_LED);
-  testLed(RIGHT_LED);
-  testLed(FRONT_RIGHT_LED);
-}
+
 void testIrReadings()
 {
   // Logs the readings from each phototransistor.
   // View logs in 'Serial Plotter'.
   // Watch values change as you put an object in front of each sensor. 
   irSensorsActive = true;
-  Serial.print(String(irReadings[FRONT_LEFT_LED][IR_VALUE]));
+  Serial.print(String(irReadings[FRONT_LEFT_SENSOR]));
   Serial.print(",");
-  Serial.print(String(irReadings[LEFT_LED][IR_VALUE]));
+  Serial.print(String(irReadings[LEFT_SENSOR]));
   Serial.print(",");
-  Serial.print(String(irReadings[RIGHT_LED][IR_VALUE]));
+  Serial.print(String(irReadings[RIGHT_SENSOR]));
   Serial.print(",");
-  Serial.println(String(irReadings[FRONT_RIGHT_LED][IR_VALUE]));
+  Serial.println(String(irReadings[FRONT_RIGHT_SENSOR]));
 }
 
 
@@ -150,8 +138,6 @@ void testIrReadings()
 
 
 // ------------ Simplified navigation functions -----------
-// Modify at your own risk!
-
 void startOffsetAction()
 {
   navForward();

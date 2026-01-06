@@ -7,16 +7,21 @@
 
 
 extern unsigned int pulseLedDelay_ms;
+extern unsigned int pulseBuzzerDelay_ms;
 
 
 void setupOtherIO();
 void loopOtherIO();
 
-void pushButton1Pressed();
-void pushButton2Pressed();
-bool checkButtonsForPress();
+void pushButtonPressed();
+bool checkButtonForPress();
+
+void ledOn();
+void ledOff();
+void arduiniLedOn();
+void arduinoLedOff();
 
 void pulseLedLoop();
-
+void pulseBuzzerLoop();
 
 #endif // Other_IO

@@ -26,23 +26,16 @@ extern bool updateGyroData;
 void setupGlobals();
 
 void print(String text, int priority = 1);
-void ledOn();
-void ledOff();
 void printLoopTime();
 
 // ------------- Define Global Type(s) -------------
-enum LEDs
+enum IR_SENSORS
 {
-  FRONT_LEFT_LED = 0,
-  LEFT_LED = 1,
-  RIGHT_LED = 2,
-  FRONT_RIGHT_LED = 3,
+  FRONT_LEFT_SENSOR = 0,
+  LEFT_SENSOR = 1,
+  RIGHT_SENSOR = 2,
+  FRONT_RIGHT_SENSOR = 3,
 };
-enum irReadingsIndexes
-{
-  IR_VALUE = 0, // Most recent IR value
-  AMBIENT_VALUE = 1,  // Most recent recoring of ambient light
-  TIME = 2, // Time to turn LED off and record results.
-};
+
 
 #endif // GLOBALS_H

@@ -1,22 +1,26 @@
 #ifndef IR_Control_H
 #define IR_Control_H
 
+#include <Wire.h>
+#include <Adafruit_VL6180X.h>
+
 #include "Globals.h"
+
+struct IrSensor {
+  Adafruit_VL6180X sensor;
+  uint8_t shutdownPin;
+  uint8_t address;
+};
 
 const int N_SENSORS = 4; // Number of sensors
 
-extern int irReadings[N_SENSORS][3];
+extern int irReadings[N_SENSORS];
 extern bool irSensorsActive;
 
-void setupLEDs();
-void loopLEDs();
+void setupIrSensors();
+void loopIrSensors();
 
-//int getIRreading(const int led, const int nReadings=1);
-void startIrReading(const int led);
-void stopIrReading(const int led);
-
+void readIrRange(const int sensorIndex);
 void checkAllWalls();
-
-void testLed(const int led);
 
 #endif // IR_Control_H

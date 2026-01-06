@@ -3,7 +3,7 @@
 CircularBuffer actionBuffer;
 bool currentActionComplete = true;
 
-// Initialize the circular buffer
+// Initialise the circular buffer
 void initBuffer(CircularBuffer &cb) 
 {
   cb.head = 0;

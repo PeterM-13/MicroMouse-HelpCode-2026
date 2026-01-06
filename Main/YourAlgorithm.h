@@ -5,6 +5,7 @@
 #include "IRcontrol.h"
 #include "MotorControl.h"
 #include "Navigation.h"
+#include "OtherIO.h"
 
 extern bool startAlgorithm;
 extern bool startAlgorithm2;
@@ -20,9 +21,8 @@ void turnLeftAction();
 void turnRightAction();
 void turnAroundAction();
 
-void testMotors();
-void testIrLeds();
 void testIrReadings();
+void testMotors();
 
 
 #endif // Your_Algorithm

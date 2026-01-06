@@ -11,12 +11,13 @@ void setup()
   // External File Setup
   setupGlobals();
   setupMotors();
-  setupLEDs();
+  setupIrSensors();
   setupGyro();
   setupOtherIO();
 
   // Show Setup is complete 
-  digitalWrite(LED_BUILTIN, LOW);
+  arduinoLedOff();
+  ledOn();
 }
 
 
@@ -26,7 +27,7 @@ void loop()
   // External file loops
   loopOtherIO();
   loopGyro();
-  loopLEDs();
+  loopIrSensors();
   loopMotors();
   loopAlgorithm();
 
@@ -103,10 +104,10 @@ void loop()
     while(1)
     {
       pulseLedLoop();
-      if(checkButtonsForPress())
+      if(checkButtonForPress())
       {
         pulseLedDelay_ms = 0; // Stop pulsing LED
-        digitalWrite(LED_BUILTIN, LOW);
+        ledOff();
         break;
       }
     }

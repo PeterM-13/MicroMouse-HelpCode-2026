@@ -101,12 +101,6 @@ bool updateGyroData = false;
 void print(String text, int priority);
 // Logs the text `text` to the serial console if the global variable `DEBUG_MODE` is greater than `priority`.
 
-void ledOn();
-// Turns the Arduino's built in LED on.
-
-void ledOff();
-// Turns the Arduino's built in LED off.
-
 void printLoopTime();
 // If called from a `loop`ing function, it prints the time to complete 1 cycle.
 ```
@@ -114,19 +108,21 @@ void printLoopTime();
 <br>
 
 ## Getting Started
-When cloning this repo, ensure all files are in directory matching .ion file, so 'Main'.<br>
-Create your maze-solving algorthim in `YourAlgorithm.cpp`. <br>
-Make use of the methods described above, and make sure to set the configurations in `config.h`.
-
+Begin in `YourAlgorithm.cpp`.<br>Here you will find a default algorith, and this is where you should make edits, using the action functions described above.<br><br>
+The other important file is `Config.h`.<br>
+You need to adjust these variuables to your specifc mouse. Use trial and error.
 <br>
 
-## Dependency
+## Dependencies
+Install these using the Arduino IDE Library Manager.
 `<Arduino_LSM9DS1.h>` Used to control the IMU & Gyro.
+`<Adafruit_VL6180X.h>` Used to control the IR Sensors.
 
 <br>
 
 ## Contributor
 * Peter Metcalfe
+Please reach out for support - I'm more than happy to help :)
 
 <br>
 <br>

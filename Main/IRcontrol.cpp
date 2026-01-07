@@ -2,10 +2,10 @@
 
 IrSensor irSensors[N_SENSORS] = {
   // Sensor object, Shutdown Pin #, I2C address.
-  { Adafruit_VL6180X(), A3, 0x29 },
-  { Adafruit_VL6180X(), A2, 0x30 },
-  { Adafruit_VL6180X(), A1, 0x31 },
-  { Adafruit_VL6180X(), A0, 0x32 }
+  { Adafruit_VL6180X(), A3, 0x32 },
+  { Adafruit_VL6180X(), A2, 0x31 },
+  { Adafruit_VL6180X(), A1, 0x30 },
+  { Adafruit_VL6180X(), A0, 0x29 }
 };
 
 int irReadings[N_SENSORS]; // Store most recent range measurements
@@ -31,11 +31,12 @@ void setupIrSensors()
       irSensors[sensorIndex].sensor.setAddress(irSensors[sensorIndex].address); // Change sensor's address
       delay(10);
     }
-    else 
+    else
     {
       print("ERROR: Failed to initialise sensor " + String(sensorIndex));
-      fatalError = true;
-      break;
+      // fatalError = true;
+      // buzzerOn();
+      // break;
     }
   }
   if(!fatalError){ print("INFO: IR Sensors ready!"); }
@@ -54,16 +55,19 @@ void loopIrSensors()
   }
 }
 
-void readIrRange(const int sensorIndex)
+void readIrRange(int sensorIndex)
 {
+  uint8_t range = irSensors[sensorIndex].sensor.readRange();
   uint8_t status = irSensors[sensorIndex].sensor.readRangeStatus();
   if (status == VL6180X_ERROR_NONE) 
   {
-    irReadings[sensorIndex] = irSensors[sensorIndex].sensor.readRange();
+    irReadings[sensorIndex] = range;
   }
   else 
   {
-    print("ERROR: IR Sensor bad status:" + String(status));
+    print("ERROR: IR Sensor " + String(sensorIndex) + " bad status: " + String(status), 2);
+    irReadings[sensorIndex] = 299; // MAX Reading
+    // Safe to assume error usually just range overflow
   }
 }
 

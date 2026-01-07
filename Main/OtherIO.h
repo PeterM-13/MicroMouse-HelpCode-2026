@@ -21,6 +21,9 @@ void ledOff();
 void arduiniLedOn();
 void arduinoLedOff();
 
+void buzzerOn();
+void buzzerOff();
+
 void pulseLedLoop();
 void pulseBuzzerLoop();
 

@@ -1,6 +1,6 @@
 
-// DEBUG must be 0 if not connected to Serial
-const int DEBUG_MODE = 0; // 1 = some logs, 2 = all logs
+// DEBUG must be 0 if not connected to Serial.
+const int DEBUG_MODE = 0; // 0 = no logs, 1 = some logs, 2 = all logs
 
 
 // ------------- Constants for Motors ----------------
@@ -8,7 +8,7 @@ const int DEBUG_MODE = 0; // 1 = some logs, 2 = all logs
 const int CELL_DISTANCE = 600; // Increase to go further
 // Motor Bias.
 const int LEFT_MOTOR_BIAS = 0; // Increase to make go right, decrease to go left
-const int RIGHT_MOTOR_BIAS = 3;  // Increase to make go left, decrease to go right
+const int RIGHT_MOTOR_BIAS = 0;  // Increase to make go left, decrease to go right
 // How close to get to the wall infront before turning.
 const int IR_MONITORING_THRESHOLD = 50; // Direct IR value. Larger value = further from wall
 

@@ -8,7 +8,6 @@
 #include "OtherIO.h"
 
 extern bool startAlgorithm;
-extern bool startAlgorithm2;
 
 void setupAlgorithm();
 void loopAlgorithm();

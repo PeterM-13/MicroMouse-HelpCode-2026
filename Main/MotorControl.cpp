@@ -149,20 +149,20 @@ void setSpeed(int motor1, int motor2)
 }
 void driveMotors()
 {
-  analogWrite(LEFT_MOTOR_PIN_A, leftMotorSpeed - rightMotorBias); 
-  analogWrite(LEFT_MOTOR_PIN_B, 0);
+  analogWrite(LEFT_MOTOR_PIN_A, 0);
+  analogWrite(LEFT_MOTOR_PIN_B, leftMotorSpeed - rightMotorBias); 
   leftMotorDirection = driving;
-  analogWrite(RIGHT_MOTOR_PIN_A, 0);
-  analogWrite(RIGHT_MOTOR_PIN_B, rightMotorSpeed - leftMotorBias);
+  analogWrite(RIGHT_MOTOR_PIN_A, rightMotorSpeed - leftMotorBias);
+  analogWrite(RIGHT_MOTOR_PIN_B, 0);
   rightMotorDirection = driving;
 }
 void reverseMotors()
 {
-  analogWrite(LEFT_MOTOR_PIN_A, 0);
-  analogWrite(LEFT_MOTOR_PIN_B, leftMotorSpeed - rightMotorBias); 
+  analogWrite(LEFT_MOTOR_PIN_A, leftMotorSpeed - rightMotorBias); 
+  analogWrite(LEFT_MOTOR_PIN_B, 0);
   leftMotorDirection = reversing;
-  analogWrite(RIGHT_MOTOR_PIN_A, rightMotorSpeed - leftMotorBias);
-  analogWrite(RIGHT_MOTOR_PIN_B, 0); 
+  analogWrite(RIGHT_MOTOR_PIN_A, 0); 
+  analogWrite(RIGHT_MOTOR_PIN_B, rightMotorSpeed - leftMotorBias);
   rightMotorDirection = reversing;
 }
 void driveMotorsOpposite(bool clockwise)
@@ -171,21 +171,21 @@ void driveMotorsOpposite(bool clockwise)
   if(clockwise == true) // Clockwise
   {
     spinDirection = clockwise;
-    analogWrite(LEFT_MOTOR_PIN_A, leftMotorSpeed - rightMotorBias); 
-    analogWrite(LEFT_MOTOR_PIN_B, 0);
+    analogWrite(LEFT_MOTOR_PIN_A, 0);
+    analogWrite(LEFT_MOTOR_PIN_B, leftMotorSpeed - rightMotorBias); 
     leftMotorDirection = driving;
-    analogWrite(RIGHT_MOTOR_PIN_A, rightMotorSpeed - leftMotorBias);
-    analogWrite(RIGHT_MOTOR_PIN_B, 0); 
+    analogWrite(RIGHT_MOTOR_PIN_A, 0); 
+    analogWrite(RIGHT_MOTOR_PIN_B, rightMotorSpeed - leftMotorBias);
     rightMotorDirection = reversing;
   }
   else // Anti-Clockwise
   {
     spinDirection = antiClockwise;
-    analogWrite(LEFT_MOTOR_PIN_A, 0);
-    analogWrite(LEFT_MOTOR_PIN_B, leftMotorSpeed - rightMotorBias); 
+    analogWrite(LEFT_MOTOR_PIN_A, leftMotorSpeed - rightMotorBias); 
+    analogWrite(LEFT_MOTOR_PIN_B, 0);
     leftMotorDirection = reversing;
-    analogWrite(RIGHT_MOTOR_PIN_A, 0); 
-    analogWrite(RIGHT_MOTOR_PIN_B, rightMotorSpeed - leftMotorBias);
+    analogWrite(RIGHT_MOTOR_PIN_A, rightMotorSpeed - leftMotorBias);
+    analogWrite(RIGHT_MOTOR_PIN_B, 0); 
     rightMotorDirection = driving;
   }
 }

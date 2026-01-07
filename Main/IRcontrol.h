@@ -5,6 +5,7 @@
 #include <Adafruit_VL6180X.h>
 
 #include "Globals.h"
+#include "OtherIO.h"
 
 struct IrSensor {
   Adafruit_VL6180X sensor;
@@ -20,7 +21,7 @@ extern bool irSensorsActive;
 void setupIrSensors();
 void loopIrSensors();
 
-void readIrRange(const int sensorIndex);
+void readIrRange(int sensorIndex);
 void checkAllWalls();
 
 #endif // IR_Control_H

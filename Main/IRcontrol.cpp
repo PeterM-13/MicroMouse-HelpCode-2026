@@ -11,6 +11,7 @@ IrSensor irSensors[N_SENSORS] = {
 int irReadings[N_SENSORS]; // Store most recent range measurements
 int currentSensor = 3; // The sensor currently being read from
 bool irSensorsActive = false; // Taking range measurements when true
+long preIrReadTime = 0; // Last time an IR sensor was read
 
 
 void setupIrSensors()
@@ -46,12 +47,17 @@ void loopIrSensors()
 {
   if(irSensorsActive) 
   {
-    currentSensor ++;
-    if(currentSensor >= N_SENSORS) // Reset count if above 3
+    const long now = millis();
+    if (millis() - preIrReadTime >= IR_SENSOR_READ_DELAY)
     {
-      currentSensor = 0;
+      preIrReadTime = now;
+      currentSensor ++;
+      if(currentSensor >= N_SENSORS) // Reset count if above 3
+      {
+        currentSensor = 0;
+      }
+      readIrRange(currentSensor); // Read one sensor per allowed interval to limit I2C load
     }
-    readIrRange(currentSensor); // Read one sensor per program loop to not cause too much delay
   }
 }
 

@@ -57,3 +57,6 @@ const int IR_SENSOR_2_WALL_THRESHOLD = 60;
 const int IR_SENSOR_3_WALL_THRESHOLD = 60;
 const int IR_SENSOR_4_WALL_THRESHOLD = 80;
 
+// Minimum delay between IR sensor reads (ms)
+const long IR_SENSOR_READ_DELAY = 20; // Increase to reduce I2C load
+

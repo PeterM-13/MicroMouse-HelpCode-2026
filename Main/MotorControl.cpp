@@ -241,7 +241,7 @@ void turnRight()
   int diff = 0;
   if(wallFront)
   {
-    diff = ((irReadings[FRONT_LEFT_SENSOR]+FRONT_IR_VALUE_DIFF) - (irReadings[FRONT_RIGHT_SENSOR]-FRONT_IR_VALUE_DIFF)) * TURNING_DIFF_SCALE;
+    diff = min(((irReadings[FRONT_LEFT_SENSOR]) - (irReadings[FRONT_RIGHT_SENSOR])) * TURNING_DIFF_SCALE, 15);
   }
   const int distanceToTravel = (90+diff) * TURN_RIGHT_DEG_TO_STEPS_MULTIPLIER;  // Convert angle to steps
   leftMotorStepsEnd = leftMotorSteps + distanceToTravel;
@@ -254,7 +254,7 @@ void turnLeft()
   int diff = 0;
   if(wallFront)
   {
-    diff = ((irReadings[FRONT_RIGHT_SENSOR]-FRONT_IR_VALUE_DIFF) - (irReadings[FRONT_LEFT_SENSOR]+FRONT_IR_VALUE_DIFF)) * TURNING_DIFF_SCALE;
+    diff = min(((irReadings[FRONT_RIGHT_SENSOR]) - (irReadings[FRONT_LEFT_SENSOR])) * TURNING_DIFF_SCALE, 15);
   }
   const int distanceToTravel = (90+diff) * TURN_LEFT_DEG_TO_STEPS_MULTIPLIER;  // Convert angle to steps
   leftMotorStepsEnd = leftMotorSteps + distanceToTravel;
@@ -265,14 +265,14 @@ void turnAround()
 {
   if(irReadings[LEFT_SENSOR] < irReadings[RIGHT_SENSOR]) // Closer to left wall, so turn right (clockwise)
   {
-    const int distanceToTravel = 180 * 2.42;  // Convert angle to steps
+    const int distanceToTravel = 180 * TURN_AROUND_DEG_TO_STEPS_MULTIPLIER;  // Convert angle to steps
     leftMotorStepsEnd = leftMotorSteps + distanceToTravel;
     rightMotorStepsEnd = rightMotorSteps + distanceToTravel;
     driveMotorsOpposite(true);
   }
   else
   {
-    int distanceToTravel = 180 * 2.42;  // Convert angle to steps
+    int distanceToTravel = 180 * TURN_AROUND_DEG_TO_STEPS_MULTIPLIER;  // Convert angle to steps
     leftMotorStepsEnd = leftMotorSteps + distanceToTravel;
     rightMotorStepsEnd = rightMotorSteps + distanceToTravel;
     driveMotorsOpposite(false);

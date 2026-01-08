@@ -18,7 +18,7 @@ void setupAlgorithm()
 {
   delay(1000); // Allow button press
   setupNavigation(); // Resets starting position
- // startOffsetAction(); // Move forward slightly to see walls ahead (assuming you start with mouse flat against back wall)
+  startOffsetAction(); // Move forward slightly to see walls ahead (assuming you start with mouse flat against back wall)
 }
 
 
@@ -26,12 +26,12 @@ void loopAlgorithm()
 { 
   if(startAlgorithm) // Set True after button pressed
   {
-    //mainAlgorithm();
+    mainAlgorithm();
   
     // --- Algorithms to Test HW ---
     // Ensure only ONE algo is uncommented at once (this includes the main one above).
     // testIrReadings();
-    testMotors();
+    // testMotors();
     // startAlgorithm = false;  // uncomment this to stop looping
   }
 }
@@ -108,11 +108,11 @@ void mainAlgorithm()
 void testMotors()
 {
   // Drives the mouse forwards at varying speed, slow to fast.
-  //addBlindMoveForwardAction(1, 50);
-  //addBlindMoveForwardAction(1, 75);
-  addBlindMoveForwardAction(3, 100);
+  addBlindMoveForwardAction(1, 50);
+  addBlindMoveForwardAction(1, 75);
+  addBlindMoveForwardAction(1, 100);
   addParkAction();
-  startAlgorithm = false;
+  startAlgorithm = false; // This stops algo from looping
 }
 
 void testIrReadings()
@@ -140,13 +140,13 @@ void testIrReadings()
 void startOffsetAction()
 {
   navForward();
-  addBlindMoveForwardAction(0.75, 70);
+  addBlindMoveForwardAction(0.75, 80);
   addCheckWallsAction();
 }
 void moveForwardAction()
 { 
   navForward();
-  addMoveForwardAction(1.0, 100);
+  addMoveForwardAction(1.0, 92);
   addCheckWallsAction();
 }
 void turnLeftAction()
@@ -205,6 +205,6 @@ void turnAroundAction()
   navRight();
   addIrMonitoringAction(70);
   addTurnAroundAction(80);
-  addBlindReverseAction(0.5, 68);
+  addBlindReverseAction(0.5, 85);
   startOffsetAction();
 }

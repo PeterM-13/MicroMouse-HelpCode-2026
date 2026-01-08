@@ -16,6 +16,10 @@ long preIrReadTime = 0; // Last time an IR sensor was read
 
 void setupIrSensors()
 {
+  Wire.begin();
+  Wire.setTimeout(20); // 20ms
+  Wire.setClock(100000); // 100KHz
+
   // ------------------- Pin Setup  -------------------
   for (int i = 0; i < N_SENSORS; i++) {
     pinMode(irSensors[i].shutdownPin, OUTPUT);
@@ -26,11 +30,11 @@ void setupIrSensors()
   for(int sensorIndex=0; sensorIndex<N_SENSORS; sensorIndex++)
   {
     digitalWrite(irSensors[sensorIndex].shutdownPin, HIGH); // Power-up IR sensor
-    delay(20);
+    delay(30);
     if (irSensors[sensorIndex].sensor.begin()) // Initialise IR sensor
     {
       irSensors[sensorIndex].sensor.setAddress(irSensors[sensorIndex].address); // Change sensor's address
-      delay(10);
+      delay(30);
     }
     else
     {
@@ -41,6 +45,7 @@ void setupIrSensors()
     }
   }
   if(!fatalError){ print("INFO: IR Sensors ready!"); }
+  preIrReadTime = millis();
 }
 
 void loopIrSensors()
@@ -79,7 +84,7 @@ void readIrRange(int sensorIndex)
 
 void checkAllWalls()
 {
-  wallFront = (irReadings[FRONT_LEFT_SENSOR] < IR_SENSOR_1_WALL_THRESHOLD && irReadings[FRONT_RIGHT_SENSOR] < IR_SENSOR_4_WALL_THRESHOLD);
+  wallFront = (irReadings[FRONT_LEFT_SENSOR] < IR_SENSOR_1_WALL_THRESHOLD || irReadings[FRONT_RIGHT_SENSOR] < IR_SENSOR_4_WALL_THRESHOLD);
   wallLeft = (irReadings[LEFT_SENSOR] < IR_SENSOR_2_WALL_THRESHOLD); 
   wallRight = (irReadings[RIGHT_SENSOR] < IR_SENSOR_3_WALL_THRESHOLD);
 }

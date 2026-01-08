@@ -17,9 +17,9 @@ bool updateGyroData = false;
 void setupGlobals()
 {  
   // Debug Setup
+  Serial.begin(115200);
   if(DEBUG_MODE > 0)
   {
-    Serial.begin(9600);
     while (!Serial);  // Wait for Serial Monitor to open before continuing
   }
 

@@ -65,9 +65,6 @@ void detectCollisionWithSteps();
 
 void startActionDelay(float delay_ms);
 
-// This is called if collision detected
-void collisionSolution();
-
 void laneCenterPID();
 
 #endif // Motor_Control_H

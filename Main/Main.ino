@@ -17,6 +17,7 @@ void setup()
 
   // Show Setup is complete 
   arduinoLedOff();
+  // Main LED on to show power & ready state
   ledOn();
 }
 

@@ -69,6 +69,7 @@ void navLeft()
   }
 }
 
+// Returns the Cell struct of the cell in the given relative direction
 const int offsets[4][4][2] = {
     // NORTH  | EAST   | SOUTH  | WEST
     {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}, // Facing NORTH

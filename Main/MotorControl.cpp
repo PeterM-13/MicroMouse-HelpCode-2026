@@ -144,8 +144,8 @@ void resetMotorBias()
 }
 void setSpeed(int motor1, int motor2)
 {
-  leftMotorSpeed = motor1 - rightMotorBias;
-  rightMotorSpeed = motor2 - leftMotorBias;
+  leftMotorSpeed = motor1;
+  rightMotorSpeed = motor2;
 }
 void driveMotors()
 {
@@ -369,8 +369,9 @@ void laneCenter()
     driveMotors();
     return;
   }
-  signed int correction = abs(round(diff));
-  correction = min(abs(correction), LC_MAX_CORRECTION) * (correction/correction);
+  signed int correction = round(diff);  // Keep the sign
+  if (correction > 0) correction = min(correction, LC_MAX_CORRECTION);
+  else correction = max(correction, -LC_MAX_CORRECTION);
   if(diff > LC_OFF_AXES_THRESHOLD) // Too far right, move left
   {
     leftMotorBias -= correction;

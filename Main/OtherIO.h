@@ -18,7 +18,7 @@ bool checkButtonForPress();
 
 void ledOn();
 void ledOff();
-void arduiniLedOn();
+void arduinoLedOn();
 void arduinoLedOff();
 
 void buzzerOn();

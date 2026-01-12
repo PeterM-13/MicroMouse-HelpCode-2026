@@ -38,9 +38,8 @@ float avgOffset = 0.0;
 void calibrateGyro() 
 {
   delay(100); // Allow time for user to move hand away from mouse
-  print("INFO: Calibrating Gyro...");
+  // print("INFO: Calibrating Gyro...");
   const float numSamples = 100.0;
- // float maxValue = 0.0;
   float sumZ = 0.0;
   for (int i = 0; i < numSamples; i++) 
   {
@@ -56,13 +55,13 @@ void calibrateGyro()
       {
         minValue = z;
       }
-      sumZ =+ z;
+      sumZ += z;
     }
   }
   avgOffset = sumZ / numSamples; 
   maxValue = maxValue * 1.1;
   minValue = minValue * 0.1;
-  print("INFO: Gyro Calibrated, offset by: " + String(gyroBiasZ));
+  // print("INFO: Gyro Calibrated, offset by: " + String(gyroBiasZ));
 }
 
 void updateGyroDataValues()

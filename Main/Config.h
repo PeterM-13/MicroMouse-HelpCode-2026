@@ -39,7 +39,7 @@ const int LC_LEFT_IR_VALUE = 80;
 // Right IR value to aim for when lane centering, with only one side wall.
 const int LC_RIGHT_IR_VALUE = 80; 
 
-// --------- Constants for crash detection
+// --------- Constants for crash detection ------------
 // Crash detection with encoder steps, how often it checks for missed steps.
 const int COL_DETC_TIME_GAP_ms = 500;   // Check for collision every 500ms
 // Crash detection with encoder steps, the number of steps to be off by to define a collision.

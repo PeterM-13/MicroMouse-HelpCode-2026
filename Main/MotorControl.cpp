@@ -369,9 +369,8 @@ void laneCenter()
     driveMotors();
     return;
   }
-  signed int correction = round(diff);  // Keep the sign
-  if (correction > 0) correction = min(correction, LC_MAX_CORRECTION);
-  else correction = max(correction, -LC_MAX_CORRECTION);
+  signed int correction = abs(round(diff));
+  correction = min(abs(correction), LC_MAX_CORRECTION) * (correction/correction);
   if(diff > LC_OFF_AXES_THRESHOLD) // Too far right, move left
   {
     leftMotorBias -= correction;

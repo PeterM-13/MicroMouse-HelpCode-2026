@@ -111,6 +111,8 @@ void testMotors()
   addBlindMoveForwardAction(1, 50);
   addBlindMoveForwardAction(1, 75);
   addBlindMoveForwardAction(1, 100);
+  //addTurnLeftAction(80); // Uncomment to test turning
+  //addTurnLeftAction(80);
   addParkAction();
   startAlgorithm = false; // This stops algo from looping
 }
@@ -146,7 +148,7 @@ void startOffsetAction()
 void moveForwardAction()
 { 
   navForward();
-  addMoveForwardAction(1.0, 92);
+  addMoveForwardAction(1.0, 100);
   addCheckWallsAction();
 }
 void turnLeftAction()

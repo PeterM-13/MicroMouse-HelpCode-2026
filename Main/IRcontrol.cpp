@@ -84,7 +84,7 @@ void readIrRange(int sensorIndex)
 
 void checkAllWalls()
 {
-  wallFront = (irReadings[FRONT_LEFT_SENSOR] < IR_SENSOR_1_WALL_THRESHOLD || irReadings[FRONT_RIGHT_SENSOR] < IR_SENSOR_4_WALL_THRESHOLD);
+  wallFront = (irReadings[FRONT_LEFT_SENSOR] < IR_SENSOR_1_WALL_THRESHOLD && irReadings[FRONT_RIGHT_SENSOR] < IR_SENSOR_4_WALL_THRESHOLD);
   wallLeft = (irReadings[LEFT_SENSOR] < IR_SENSOR_2_WALL_THRESHOLD); 
   wallRight = (irReadings[RIGHT_SENSOR] < IR_SENSOR_3_WALL_THRESHOLD);
 }

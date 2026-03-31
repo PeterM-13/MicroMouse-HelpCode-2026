@@ -5,12 +5,12 @@ const int DEBUG_MODE = 0; // 0 = no logs, 1 = some logs, 2 = all logs
 
 // ------------- Constants for Motors ----------------
 // Number of encoder cycles to move one cell.
-const int CELL_DISTANCE = 310; // Increase to go further. (Good range: 295-335)
+const int CELL_DISTANCE = 320; // Increase to go further. (Good range: 295-335)
 // Motor Bias.
 const int LEFT_MOTOR_BIAS = 0; // Increase to make go right, decrease to go left
 const int RIGHT_MOTOR_BIAS = 0;  // Increase to make go left, decrease to go right
 // How close to get to the wall infront before turning.
-const int IR_MONITORING_THRESHOLD = 95; // Direct IR value. Larger value = further from wall. (Good range: 45-115)
+const int IR_MONITORING_THRESHOLD = 55; // Direct IR value. Larger value = further from wall. (Good range: 45-115)
 
 // ------------ Constants for turning ---------------
 // Number of steps to count when making left turn. Adjust if your mouse over or under steers. (Good range: 1.2-1.5)
@@ -18,8 +18,8 @@ const float TURN_RIGHT_DEG_TO_STEPS_MULTIPLIER = 1.4; // Increase to to turn rig
 const float TURN_LEFT_DEG_TO_STEPS_MULTIPLIER = 1.4; // Increase to turn left for longer
 const float TURN_AROUND_DEG_TO_STEPS_MULTIPLIER = 1.4; // Increase to turn around for longer
 // IR values used to detect a gap (no wall). Motor steps counted every time gap opens to know when to turn.
-const int IR_SENSOR_2_WALL_GAP_THRESHOLD = 110; // Increase for more sensitivity
-const int IR_SENSOR_3_WALL_GAP_THRESHOLD = 110; // Good range: TBD;
+const int IR_SENSOR_2_WALL_GAP_THRESHOLD = 115; // Increase for more sensitivity
+const int IR_SENSOR_3_WALL_GAP_THRESHOLD = 115; // Good range: TBD;
 // Scale for how much/less extra to turn based on front sensor readings difference. 0 = not active.
 const float TURNING_DIFF_SCALE = 0.5; // Higher = more turning based on readings (Good range: 0.0-2.0)
 
@@ -49,11 +49,11 @@ const float COLLISION_THRESHOLD = 2.8; // smaller = more sensitive
 
 // ------------ Constants for IR sensors -------------
 // Maximum IR reading limits to detect a wall. So, IR reading less than these vars = wall. (Units = mm)
-const int IR_SENSOR_1_WALL_THRESHOLD = 186;
+const int IR_SENSOR_1_WALL_THRESHOLD = 180;
 const int IR_SENSOR_2_WALL_THRESHOLD = 120;
 const int IR_SENSOR_3_WALL_THRESHOLD = 120;
-const int IR_SENSOR_4_WALL_THRESHOLD = 186;
+const int IR_SENSOR_4_WALL_THRESHOLD = 180;
 
 // Minimum delay between IR sensor reads (ms)
-const long IR_SENSOR_READ_DELAY = 40; // Increase to reduce I2C load
+const long IR_SENSOR_READ_DELAY = 10; // Increase to reduce I2C load
 

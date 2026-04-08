@@ -10,6 +10,8 @@ const int LED_PIN = 9;
 bool pulseLedState = false;
 unsigned int pulseLedDelay_ms = 0;
 long prevPulseLedTime = 0;
+bool ledPulseActionActive = false;
+unsigned long ledPulseActionEnd_ms = 0;
 
 // Buzzer variables
 const int BUZZER_PIN = 8;
@@ -45,6 +47,12 @@ void loopOtherIO()
   checkButtonForPress();
 
   pulseLedLoop();
+
+  if (ledPulseActionActive && millis() >= ledPulseActionEnd_ms)
+  {
+    ledOff();
+    ledPulseActionActive = false;
+  }
 }
 
 // -------- Button Functions -------
@@ -106,6 +114,13 @@ void pulseLedLoop()
     pulseLedState = !pulseLedState;
     prevPulseLedTime = currentPulseLedTime;
   }
+}
+
+void startLedPulse(unsigned long pulse_ms)
+{
+  ledOn();
+  ledPulseActionEnd_ms = millis() + pulse_ms;
+  ledPulseActionActive = true;
 }
 
 

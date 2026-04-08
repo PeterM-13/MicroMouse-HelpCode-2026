@@ -5,18 +5,18 @@ const int DEBUG_MODE = 0; // 0 = no logs, 1 = some logs, 2 = all logs
 
 // ------------- Constants for Motors ----------------
 // Number of encoder cycles to move one cell.
-const int CELL_DISTANCE = 320; // Increase to go further. (Good range: 295-335)
+const int CELL_DISTANCE = 326; // Increase to go further. (Good range: 295-335)
 // Motor Bias.
 const int LEFT_MOTOR_BIAS = 0; // Increase to make go right, decrease to go left
 const int RIGHT_MOTOR_BIAS = 0;  // Increase to make go left, decrease to go right
-// How close to get to the wall infront before turning.
-const int IR_MONITORING_THRESHOLD = 55; // Direct IR value. Larger value = further from wall. (Good range: 45-115)
 
 // ------------ Constants for turning ---------------
 // Number of steps to count when making left turn. Adjust if your mouse over or under steers. (Good range: 1.2-1.5)
-const float TURN_RIGHT_DEG_TO_STEPS_MULTIPLIER = 1.4; // Increase to to turn right for longer.
-const float TURN_LEFT_DEG_TO_STEPS_MULTIPLIER = 1.4; // Increase to turn left for longer
-const float TURN_AROUND_DEG_TO_STEPS_MULTIPLIER = 1.4; // Increase to turn around for longer
+const float TURN_RIGHT_DEG_TO_STEPS_MULTIPLIER = 1.45; // Increase to to turn right for longer.
+const float TURN_LEFT_DEG_TO_STEPS_MULTIPLIER = 1.45; // Increase to turn left for longer
+const float TURN_AROUND_DEG_TO_STEPS_MULTIPLIER = 1.43; // Increase to turn around for longer
+// How close to get to the wall infront before turning.
+const int IR_MONITORING_THRESHOLD = 68; // Direct IR value. Larger value = further from wall. (Good range: 45-115)
 // IR values used to detect a gap (no wall). Motor steps counted every time gap opens to know when to turn.
 const int IR_SENSOR_2_WALL_GAP_THRESHOLD = 115; // Increase for more sensitivity
 const int IR_SENSOR_3_WALL_GAP_THRESHOLD = 115; // Good range: TBD;
@@ -29,7 +29,7 @@ const int LC_OFF_AXES_THRESHOLD = 4;    // (Good Range 2-10)
 // Corrects bias left or right of the lane.
 const signed int LC_LEFT_RIGHT_BIAS = 0; // Make negative for left movement
 // The maximum the lane centering can adjust the motor bias.
-const int LC_MAX_CORRECTION = 8; // Decrease for small adjustments (Good range; 5-25)
+const int LC_MAX_CORRECTION = 15; // Decrease for small adjustments (Good range; 5-25)
 // -- Following vars used for 1 walled laned centering - so only a wall on the left, or only a wall on the right --
 // Value used to intiate one-sided lane centering. Smaller than main wall threshold to detect singular posts.
 const int IR_SENSOR_2_WALL_THRESHOLD_LC = 95; // Increase for more sensitivty. Don't make too big or will detect wall from 2 cells away.
@@ -45,15 +45,15 @@ const int COL_DETC_TIME_GAP_ms = 500;   // Check for collision every 500ms
 // Crash detection with encoder steps, the number of steps to be off by to define a collision.
 const int COL_DETC_STEP_THRESHOLD = 50; // Check for min 50 steps every 500ms
 // Gyro collision detection threshold. If IMU magnitude greater than this value, collision detected.
-const float COLLISION_THRESHOLD = 2.8; // smaller = more sensitive
+const float COLLISION_THRESHOLD = 2.9; // smaller = more sensitive
 
 // ------------ Constants for IR sensors -------------
 // Maximum IR reading limits to detect a wall. So, IR reading less than these vars = wall. (Units = mm)
-const int IR_SENSOR_1_WALL_THRESHOLD = 180;
+const int IR_SENSOR_1_WALL_THRESHOLD = 190;
 const int IR_SENSOR_2_WALL_THRESHOLD = 120;
 const int IR_SENSOR_3_WALL_THRESHOLD = 120;
-const int IR_SENSOR_4_WALL_THRESHOLD = 180;
+const int IR_SENSOR_4_WALL_THRESHOLD = 190;
 
 // Minimum delay between IR sensor reads (ms)
-const long IR_SENSOR_READ_DELAY = 10; // Increase to reduce I2C load
+const long IR_SENSOR_READ_DELAY = 0; // Increase to reduce I2C load
 

@@ -26,5 +26,6 @@ void buzzerOff();
 
 void pulseLedLoop();
 void pulseBuzzerLoop();
+void startLedPulse(unsigned long pulse_ms);
 
 #endif // Other_IO

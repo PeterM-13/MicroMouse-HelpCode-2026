@@ -89,6 +89,11 @@ void loop()
           print("ACTION: Delay");
           startActionDelay(action.timestamp);
           break;
+        case ACTION_TYPE_LED_PULSE:
+          print("ACTION: LED Pulse");
+          startLedPulse(action.timestamp);
+          currentActionComplete = true;
+          break;
         default:
           print("ERROR: Unsupported action type!");
           break;

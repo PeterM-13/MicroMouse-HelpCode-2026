@@ -200,3 +200,12 @@ void addDelayAction(float delay_ms){
   newAction.motor2Speed = -1;
   addAction(actionBuffer, newAction);
 }
+void addLedPulseAction(unsigned long pulse_ms)
+{
+  Action newAction;
+  newAction.timestamp = pulse_ms;
+  newAction.type = ACTION_TYPE_LED_PULSE;
+  newAction.motor1Speed = -1;
+  newAction.motor2Speed = -1;
+  addAction(actionBuffer, newAction);
+}

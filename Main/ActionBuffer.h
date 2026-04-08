@@ -21,6 +21,7 @@ enum ActionType {
   ACTION_TYPE_CHECK_WALLS,        // Updates the globals wall variables with the latest IR readings
   ACTION_TYPE_IR_MONITOR,         // Starts driving until IR readings are met
   ACTION_TYPE_DELAY,              // Used to simply pause movements
+  ACTION_TYPE_LED_PULSE,          // Turns the LED on for a fixed duration
 };
 
 // Structure to represent an action/move
@@ -83,6 +84,6 @@ void addBlindReverseAction(float nCells, int speed);
 void addCheckWallsAction();
 void addIrMonitoringAction(int speed);
 void addDelayAction(float delay_ms);
-
+void addLedPulseAction(unsigned long pulse_ms);
 
 #endif // ACTION_BUFFER_H

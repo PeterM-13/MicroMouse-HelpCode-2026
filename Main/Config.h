@@ -1,3 +1,5 @@
+#ifndef Config_H
+#define Config_H
 
 // DEBUG must be 0 if not connected to Serial.
 const int DEBUG_MODE = 0; // 0 = no logs, 1 = some logs, 2 = all logs
@@ -59,3 +61,4 @@ const int IR_SENSOR_4_WALL_THRESHOLD = 190;
 // Minimum delay between IR sensor reads (ms)
 const long IR_SENSOR_READ_DELAY = 0; // Increase to reduce I2C load
 
+#endif Config_H

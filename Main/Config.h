@@ -22,6 +22,8 @@ const int IR_SENSOR_2_WALL_GAP_THRESHOLD = 115; // Increase for more sensitivity
 const int IR_SENSOR_3_WALL_GAP_THRESHOLD = 115; // Good range: TBD;
 // Scale for how much/less extra to turn based on front sensor readings difference. 0 = not active.
 const float TURNING_DIFF_SCALE = 0.5; // Higher = more turning based on readings (Good range: 0.0-2.0)
+// Percentage of a cell to travel before turning on junction with no wall in-front.
+const float BLIND_TURN_CELL_DISTANCE_SINCE_LAST_WALL = 0.6;
 
 // --------  Constansts used for lane centering (LC) --------------
 // How tight to the middle of the lane it stays. Lower value = narrower band to stay in, so more sensitive.

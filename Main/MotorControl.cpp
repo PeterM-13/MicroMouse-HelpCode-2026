@@ -86,15 +86,14 @@ void loopMotors()
         print("INFO: Steps end reached");
         parkMotors(true);
       } 
-      else if(spinDirection == notSpinning)
-      {
+      // else if(spinDirection == notSpinning)
+      // {
         // Monitor last wall opening
-        if(irReadings[LEFT_SENSOR] > IR_SENSOR_2_WALL_GAP_THRESHOLD ||
-          irReadings[RIGHT_SENSOR] > IR_SENSOR_3_WALL_GAP_THRESHOLD) // No wall left or no wall right
+        if(!wallLeft || !wallRight) // No wall left or no wall right
         {
           int avgMotorSteps = round((leftMotorSteps + rightMotorSteps) / 2.0);
           int diffAvgMotorSteps = avgMotorSteps - prevAvgMotorSteps;
-          if(abs(diffAvgMotorSteps) < 10)
+          if(abs(diffAvgMotorSteps) < 12)
           {
             stepsSincelastWallGap += diffAvgMotorSteps;
           }
@@ -105,7 +104,7 @@ void loopMotors()
           stepsSincelastWallGap = 0;
           prevAvgMotorSteps = 0;
         }
-      }
+      // }
     }
 
     // No longer using the gyro - too inaccurate, had +/- 10 deg

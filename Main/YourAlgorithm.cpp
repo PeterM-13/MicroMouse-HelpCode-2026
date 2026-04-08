@@ -97,6 +97,10 @@ void mainAlgorithm()
       // Reached dead end, so turn around.
       turnAroundAction();
     }
+
+    // Example of how to add a delay or LED pulse actions between decisions, useful for debugging.
+    // addDelayAction(250);
+    // addLedPulseAction(100);
   }
 }
 
@@ -159,10 +163,10 @@ void turnLeftAction()
   }
   else
   {
-    const float DIST_OFFSET = 0.8 - (stepsSincelastWallGap/(float)CELL_DISTANCE);
-    if(stepsSincelastWallGap != 0 && DIST_OFFSET >= 0.0)
+    float cellDistSinceLastWallGap = ((float)stepsSincelastWallGap)/((float)CELL_DISTANCE);
+    if(cellDistSinceLastWallGap < BLIND_TURN_CELL_DISTANCE_SINCE_LAST_WALL)
     {
-      addBlindMoveForwardAction(DIST_OFFSET, 70);
+      addBlindMoveForwardAction(max(BLIND_TURN_CELL_DISTANCE_SINCE_LAST_WALL - 0.2 - cellDistSinceLastWallGap, 0.2), 70);
     }
     else
     {
@@ -184,10 +188,10 @@ void turnRightAction()
   }
   else
   {
-    const float DIST_OFFSET = 0.8 - (stepsSincelastWallGap/(float)CELL_DISTANCE);
-    if(stepsSincelastWallGap != 0 && DIST_OFFSET >= 0.0)
+    float cellDistSinceLastWallGap = ((float)stepsSincelastWallGap)/((float)CELL_DISTANCE);
+    if(cellDistSinceLastWallGap < BLIND_TURN_CELL_DISTANCE_SINCE_LAST_WALL)
     {
-      addBlindMoveForwardAction(DIST_OFFSET, 70);
+      addBlindMoveForwardAction(max(BLIND_TURN_CELL_DISTANCE_SINCE_LAST_WALL - 0.2 - cellDistSinceLastWallGap, 0.2), 70);
     }
     else
     {

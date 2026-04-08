@@ -22,7 +22,7 @@ enum ActionType {
   ACTION_TYPE_IR_MONITOR,         // Starts driving until IR readings are met
   ACTION_TYPE_DELAY,              // Used to simply pause movements
   ACTION_TYPE_LED_PULSE,          // Turns the LED on for a fixed duration
-};
+}; 
 
 // Structure to represent an action/move
 struct Action {

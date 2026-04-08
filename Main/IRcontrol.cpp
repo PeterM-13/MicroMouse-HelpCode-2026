@@ -80,6 +80,8 @@ void readIrRange(int sensorIndex)
     irReadings[sensorIndex] = 299; // MAX Reading
     // Safe to assume error usually just range overflow
   }
+
+  checkAllWalls();
 }
 
 void checkAllWalls()
